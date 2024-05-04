@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<title>Escola Octógono</title>
+<style>
+  body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+
+  h1, h2 {
+    color: #d9534f;
+    margin: 20px 0;
+  }
+
+  select, .btn, input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    background: white;
+    border: 1px solid #ddd;
+  }
+
+  select:hover, .btn:hover, input[type="date"]:hover {
+    background: #c9302c;
+    color: white;
+  }
+
+  .btn {
+    background: #d9534f;
+    color: white;
+    cursor: pointer;
+  }
+
+  .year-box {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+  }
+
+  .year {
+    flex: 1;
+    padding: 10px;
+    margin: 0 5px;
+    background: #d9534f;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    opacity: 1;
+    transition: background 0.3s, opacity 0.3s;
+  }
+
+  .year.selected {
+    opacity: 0.5;
+  }
+
+  .error-message {
+    color: red;
+    font-size: 16px;
+    margin-top: 20px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Escola Octógono</h1>
+  <form method="post" action="{% url 'pagina_ola_mundo' %}">
+    {% csrf_token %}
+    <h2>Escolha a turma</h2>
+    <select name="turma">
+      <option value="">Selecione uma turma</option>
+      <option value="Turma A" {% if turma == "Turma A" %}selected{% endif %}>Turma A</option>
+      <option value="Turma B" {% if turma == "Turma B" %}selected{% endif %}>Turma B</option>
+    </select>
+
+    <h2>Selecione o Ano</h2>
+    <div class="year-box">
+      {% for i in "12345" %}
+      <input type="radio" id="ano{{ i }}" name="ano" value="{{ i }}º Ano" onclick="selectYear(this)"
+             class="year" {% if ano == i|add:"º Ano" %}checked{% endif %}>
+      <label for="ano{{ i }}">{{ i }}º Ano</label>
+      {% endfor %}
+    </div>
+
+    <h2>Escolha a Matéria</h2>
+    <select name="materia">
+      <option value="">Selecione uma matéria</option>
+      <option value="Matemática" {% if materia == "Matemática" %}selected{% endif %}>Matemática</option>
+      <option value="Português" {% if materia == "Português" %}selected{% endif %}>Português</option>
+      <option value="Artes" {% if materia == "Artes" %}selected{% endif %}>Artes</option>
+      <option value="Ciências" {% if materia == "Ciências" %}selected{% endif %}>Ciências</option>
+      <option value="História" {% if materia == "História" %}selected{% endif %}>História</option>
+      <option value="Geografia" {% if materia == "Geografia" %}selected{% endif %}>Geografia</option>
+      <option value="Educação Física" {% if materia == "Educação Física" %}selected{% endif %}>Educação Física</option>
+      <option value="Inglês" {% if materia == "Inglês" %}selected{% endif %}>Inglês</option>
+    </select>
+
+    <button type="submit" class="btn">Continuar</button>
+  </form>
+
+  <!-- Adicionando o formulário para selecionar a data do relatório -->
+  {% if show_options %}
+    <h2>Escolha o que quer fazer</h2>
+    <div class="year-box">
+      <div class="year" onclick="location.href='{% url 'iniciar_registro' %}'">Registrar presenças/faltas</div>
+      <div class="year">
+        <form method="post" action="{% url 'gerar_relatorio' %}">
+          {% csrf_token %}
+          <input type="date" name="data_escolhida" required>
+          <button type="submit" class="btn">Gerar relatório de presenças/faltas</button>
+        </form>
+      </div>
+    </div>
+  {% endif %}
+</div>
+
+</body>
+</html>

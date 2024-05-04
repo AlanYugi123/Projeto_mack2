@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<title>Relatório de Presenças e Faltas</title>
+<style>
+  body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+
+  h1, h2 {
+    color: #d9534f;
+    margin: 20px 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #d9534f;
+    color: white;
+  }
+
+  .btn {
+    padding: 10px 20px;
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+
+  .btn:hover {
+    background-color: #c9302c;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Relatório de Presenças e Faltas - Data: {{ data }}</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Nome do Aluno</th>
+        <th>Matrícula</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for registro in registros %}
+      <tr>
+        <td>{{ registro.aluno.nome }}</td>
+        <td>{{ registro.matricula }}</td>
+        <td>{{ registro.status }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <a href="{% url 'download_xlsx' %}" class="btn">Download XLSX</a>
+</div>
+</body>
+</html>

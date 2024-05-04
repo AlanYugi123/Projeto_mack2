@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<title>Escolha o Momento da Aula</title>
+<style>
+  body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 600px;
+    margin: 50px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+
+  h1 {
+    color: #d9534f;
+    margin-bottom: 20px;
+  }
+
+  select, .btn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 4px;
+    background: white;
+    border: 1px solid #ddd;
+  }
+
+  select:hover, .btn:hover {
+    background: #c9302c;
+    color: white;
+  }
+
+  .btn {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Escola Octógono</h1>
+  <br>
+  <br>
+  <h2>Escolha o Momento da Aula</h2>
+  <form method="post" action="{% url 'iniciar_registro' %}">
+    {% csrf_token %}
+    <select name="momento">
+      <option value="Início da aula">Início da aula</option>
+      <option value="Pós intervalo">Pós intervalo</option>
+    </select>
+    <button type="submit" class="btn">Iniciar</button>
+  </form>
+</div>
+</body>
+</html>
